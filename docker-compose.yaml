@@ -1,0 +1,16 @@
+name: smalltv-pro-esphome
+
+# Build environment only, nothing runs permanently.
+#   docker compose run --rm esphome compile smalltv-pro.yaml
+#   docker compose run --rm esphome upload smalltv-pro.yaml --device <ip-of-the-clock>
+#   docker compose run --rm esphome logs smalltv-pro.yaml --device <ip-of-the-clock>
+services:
+  esphome:
+    image: ghcr.io/esphome/esphome:2026.9.1
+    profiles: ["build"]
+    volumes:
+      - .:/config
+    environment:
+      PLATFORMIO_CORE_DIR: /config/.platformio   # keep the toolchain between builds
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 2g
